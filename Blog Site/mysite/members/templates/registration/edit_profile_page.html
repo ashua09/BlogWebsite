@@ -1,0 +1,25 @@
+{% extends 'blog/base.html '%}
+{% block title %}Edit Profile Page{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+   {% if user.id == profile.user.id %}
+            <h1>Edit Your Profile Page</h1>
+            <div class="form-label">
+                <form  method="POST">
+                    {% csrf_token %}
+                    
+                    {{form.as_p}}
+                    <button type="submit" class="btn btn-secondary">Update</button>
+                </form>
+            </div>
+            </div>
+    {% else %}
+    <h2>This is not your profile</h2>
+    {% endif %}
+
+
+{% else %}
+<h1>Login first to edit your profile</h1>
+{% endif %}
+{% endblock %}

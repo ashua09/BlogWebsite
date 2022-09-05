@@ -1,0 +1,59 @@
+{% extends 'blog/base.html '%}
+{% load static %}
+{% block title %}{{post.title}}{% endblock %}
+
+{% block content %}
+
+<h1>{{post.title}}</h1>
+<small>By: <a href="{% url 'members:profile_page' post.author.profile.id %}">{{post.author.first_name}} {{post.author.last_name}}</a></small>
+<small>  - {{post.published_date}}</small>
+<br/>
+        {% if user.is_authenticated %}
+             {% if user.id == post.author.id %} 
+                    <p><small>
+                        <a href="{% url 'blog:update_post' pk=post.pk%}" >Edit</a> |
+                        <a href="{% url 'blog:delete_post' pk=post.pk%}">Delete</a>
+                    </small></p>
+            {% endif %}         
+        {% endif %}
+<hr>
+        {% if post.header_image %}
+        <img src="{{ post.header_image.url}}" >
+        {% endif %}
+<br><br>
+{{post.body|safe}}
+<br>
+<br>
+
+<!-- <a href="{% url 'blog:home' %}" class="btn btn-secondary">Home</a>
+{% if user.is_authenticated %}
+    {% if user.id == post.author.id %}      This is to make sure the person who make the post can only edit and delete that post -->
+    <!-- <a href="{% url 'blog:update_post' pk=post.pk%}" class="btn btn-secondary">Edit</a>
+    <a href="{% url 'blog:delete_post' pk=post.pk%}" class="btn btn-secondary">Delete</a>
+    <br><br>   
+    {% endif %}
+    <br><br>
+{% endif %} -->
+<h3>Comments</h3>
+<hr>
+{% if not post.comments.all %}
+ No comments yet...
+<a href="{% url 'blog:add_comment' post.pk %}">Add comment</a>
+
+{% else %}
+<a href="{% url 'blog:add_comment' post.pk %}">Add comment</a>
+<br>
+<ul>
+    {% for comment in post.comments.all %}
+      <strong>{{comment.name}} - {{comment.date_added}}</strong>
+      <br>
+    {{comment.body}} 
+      <br>
+
+    {% endfor %}
+</ul>
+{% endif %}
+
+
+
+{% endblock %}

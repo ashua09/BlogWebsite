@@ -1,0 +1,9 @@
+{% extends 'blog/base.html '%}
+{% block title %}Password Change Done{% endblock %}
+
+{% block content %}
+
+<h1>Password Was Changed Successfully...!</h1>
+<br><br>
+<a href="{% url 'blog:home' %}" class="btn btn-secondary">Home</a>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'blog/base.html '%}
+
+
+{% block content %}
+
+<h1>Post</h1>
+<ul>
+{% for post in object_list %}
+
+    <li><a href="{% url 'blog:post_detail' pk=post.pk %}">{{post.title}} -</a><small>
+        <a href="{% url 'blog:category' post.category %}">({{post.category}})</a>
+         -{{post.published_date}}
+        <!-- <a href="{% url 'blog:update_post' pk=post.pk %}"> (Update) </a>
+        
+        <a href="{% url 'blog:delete_post' pk=post.pk %}"> (Delete) </a></li> -->
+    </small></Li>
+    {{post.snippet}}
+    <!-- {{ post.body|slice:":200"|safe }} -->
+
+{% endfor %}
+</ul>
+{% endblock %}

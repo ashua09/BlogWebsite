@@ -1,0 +1,25 @@
+{% extends 'blog/base.html '%}
+{% block title %}Category{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+    {% if category_post %}   
+
+     <h2>{{cats}} Category Post</h2>
+        <br><br>
+        
+            <ul>
+                {% for post in category_post %}
+                    <li>{{post.title}}</li>
+                    {{ post.body|slice:":200"|safe }}
+                {% endfor %}
+            </ul>
+        {% else %}
+        <h4>No such category</h4>
+        {% endif %}
+
+    {% else %}
+    <h2>Log In First To See the post</h2>
+
+    {% endif %}
+{% endblock %}
