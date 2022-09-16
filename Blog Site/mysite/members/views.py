@@ -13,19 +13,15 @@ class CreateProfilePage(CreateView):
     model=Profile
     form_class=CreateProfilePageForm
     template_name='registration/create_profile_page.html'
-    # fields='__all__'
 
     def form_valid(self,form):   #making the user id available for our profile so that when we save the form it save under right user
         form.instance.user=self.request.user
         return super().form_valid(form)
  
-    # success_url=reverse_lazy('members:profile_page')
-
 class EditProfilePage(UpdateView):
     model=Profile
     form_class=EditProfilePageForm
     template_name='registration/edit_profile_page.html'
-    #fields=['bio','profile_pic','website_url','facebook_url','insta_url','linkdin_url']
     success_url=reverse_lazy('blog:home')
 
 class ShowProfilePage(DetailView):
@@ -33,14 +29,10 @@ class ShowProfilePage(DetailView):
     template_name='registration/profile_page.html'
 
     def get_context_data(self,*args, **kwargs):
-        # users=Profile.objects.all()
         context= super(ShowProfilePage,self).get_context_data(*args,**kwargs)
-
         page_user=get_object_or_404(Profile,id=self.kwargs['pk'])        
         context['page_user']=page_user
-        
         return context
-
 
 class UserRegister(CreateView):
     form_class=SignUpForm
@@ -57,8 +49,6 @@ class UserEditProfile(UpdateView):
 
 class PasswordChangeView(PasswordChangeView):
     form_class=PasswordChangingForm
-    # form_class=PasswordChangeForm
-    # success_url=reverse_lazy('blog:home')   
     success_url=reverse_lazy('members:pswrd_success')   
 
 def password_success(request):
